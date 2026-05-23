@@ -12,7 +12,7 @@ Write or update Python function docstrings using the following style conventions
 - Opening `"""` on the line immediately after the function signature; summary text starts on the next line as `"""`
 - One or two sentences summarizing what the function does; ends with a period
 - Blank line after the summary, before the first section
-- Sections: `Args:`, `Returns:`, `Raises:` — include only sections that apply
+- Sections: `Args:`, `Raises:`, `Returns:` — include only sections that apply
 - No blank lines between sections
 - Closing `"""` on its own line, indented to match the function body
 
@@ -22,15 +22,15 @@ Write or update Python function docstrings using the following style conventions
 - Types use lowercase Python built-in generics: `list[dict]`, `str`, `bool`, `typing.Any`
 - Note default values inline in the description: `(default: "id")`
 
-## Returns section
-
-- Format: `    type: Description.` (no parameter name)
-- Optional: `    type or None: Description.`
-
 ## Raises section
 
 - Format: `    ExceptionType: Description.`
 - Omit entirely if the function raises no exceptions
+
+## Returns section
+
+- Format: `    type: Description.` (no parameter name)
+- Optional: `    type or None: Description.`
 
 ## Example
 
@@ -46,10 +46,10 @@ def get_record_by_key_value(records: list[dict], value: typing.Any, key: str = "
         key (str): The key to check (default: "id").
         strict (bool): If True, raise a ValueError when not exactly one match is found.
 
-    Returns:
-        dict or None: A dictionary of the matching record, or None if no matches are found.
-
     Raises:
         ValueError: If the number of results is not exactly 1, and strict is enabled.
+
+    Returns:
+        dict or None: A dictionary of the matching record, or None if no matches are found.
     """
 ```
