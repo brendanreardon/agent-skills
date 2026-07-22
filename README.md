@@ -6,6 +6,7 @@ These skills (try) to follow the [Agent Skills specification](https://agentskill
 
 | Skill | Description |
 | ----- | ----------- |
+| [python-alphabetize-class-methods](./python-alphabetize-class-methods/) | Sort Python class methods into strict alphabetical (A-Z, case-sensitive) order whenever writing or editing a class. |
 | [python-docstrings](./python-docstrings/) | Write or update Python function docstrings in Google-style format with Args, Raises, and Returns sections. |
 
 ## Installation
