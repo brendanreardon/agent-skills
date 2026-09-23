@@ -8,6 +8,7 @@ These skills (try) to follow the [Agent Skills specification](https://agentskill
 | ----- | ----------- |
 | [python-alphabetize-class-methods](./python-alphabetize-class-methods/) | Sort Python class methods into strict alphabetical (A-Z, case-sensitive) order whenever writing or editing a class. |
 | [python-docstrings](./python-docstrings/) | Write or update Python function docstrings in Google-style format with Args, Raises, and Returns sections. |
+| [python-import-conventions](./python-import-conventions/) | Import root modules/packages and reference members via their full dotted path, instead of importing specific names out of them. |
 
 ## Installation
 
