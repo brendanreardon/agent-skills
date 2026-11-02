@@ -1,12 +1,20 @@
+# /// script
+# requires-python = ">=3.10"
+# dependencies = [
+#   "matplotlib>=3.6",
+#   "pillow",
+# ]
+# ///
 """Helpers for the python-figure-structure skill.
 
 Copy remove_spines and save_figure into a notebook or module, or import this file.
-Run `python figure_helpers.py --self-test` to write a demo figure and check the outputs.
+Run `uv run scripts/figure_helpers.py --self-test` to write a demo figure to a temporary folder and check the outputs.
 """
 
 import argparse
 import pathlib
 import sys
+import tempfile
 
 import matplotlib
 import matplotlib.pyplot as plt
@@ -17,7 +25,8 @@ MM_TO_INCH = 1 / 25.4
 
 
 def remove_spines(ax):
-    """Hides all four spines of an axis.
+    """
+    Hides all four spines of an axis.
 
     Args:
         ax (matplotlib.axes.Axes): The axis to style.
@@ -31,14 +40,15 @@ def remove_spines(ax):
 
 
 def save_figure(fig, figure_width_mm, output_folder, output_filename, dpi_output=DPI_OUTPUT):
-    """Writes a figure as eps, pdf, png, transparent png, svg, and a PowerPoint-sized png.
+    """
+    Writes a figure as eps, pdf, png, transparent png, svg, and a PowerPoint-sized png.
 
     Args:
         fig (matplotlib.figure.Figure): The figure to save.
         figure_width_mm (float): Intended physical width in millimetres, used for the .ppt.png DPI.
         output_folder (str | pathlib.Path): Folder to write into; created if missing.
         output_filename (str): File name without extension.
-        dpi_output (int): Resolution for raster and eps output.
+        dpi_output (int): Resolution for raster and eps output (default: 500).
 
     Returns:
         list[pathlib.Path]: The files written.
@@ -73,13 +83,11 @@ def save_figure(fig, figure_width_mm, output_folder, output_filename, dpi_output
 
 
 def _self_test(output_folder):
-    """Writes a demo figure and verifies all six files and the PowerPoint DPI.
+    """
+    Writes a demo figure and verifies all six files and the PowerPoint DPI.
 
     Args:
         output_folder (str | pathlib.Path): Folder to write the demo figure into.
-
-    Returns:
-        None
 
     Raises:
         AssertionError: If a file is missing or the PowerPoint DPI is wrong.
@@ -108,10 +116,14 @@ def _self_test(output_folder):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--self-test", action="store_true", help="Write a demo figure and verify it.")
-    parser.add_argument("--output-folder", default="self-test-figure", help="Folder for the demo figure.")
+    parser.add_argument(
+        "--output-folder",
+        default=None,
+        help="Folder for the demo figure (default: a new temporary folder).",
+    )
     args = parser.parse_args()
     if not args.self_test:
         parser.print_help()
         sys.exit(0)
     matplotlib.use("Agg")
-    _self_test(args.output_folder)
+    _self_test(args.output_folder or tempfile.mkdtemp(prefix="figure-self-test-"))

@@ -58,11 +58,7 @@ order = ['blue', 'orange', 'red', 'cyan', 'green', 'yellow', 'purple', 'pink', '
 
 - `tableau10` and `tableau20` use different hexes for the same name: Tableau10 `yellow` is `#edc948` and Tableau20 `yellow` is `#b6992d`; Tableau10 `grey` is `#bab0ac` and Tableau20 `grey` is `#79706e`. Don't mix a color from one dict with a `light` partner from the other; take both from `tableau20`.
 - Tableau10 calls the blue-green `cyan`; Tableau20 calls it `teal`.
-- The Obsidian note's Tableau10 `pink` is `(225, 157, 167)`, which is `#e19da7`. Tableau's published value is `#ff9da7` (255, 157, 167), so the note has a typo. This skill uses `#ff9da7`.
-
-## When to use
-
-Papers, posters, and general analysis figures. For Dana-Farber slides and branded material, use `color-palette-dfci`.
+- Tableau10 `pink` is `#ff9da7`. Some copies list `#e19da7`, which is a typo.
 
 ## Source
 

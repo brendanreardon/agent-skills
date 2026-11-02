@@ -1,10 +1,6 @@
 ---
 name: python-figure-structure
-description: Build matplotlib/pandas figures in a fixed ten-step order (palette, title and labels, size in mm, setup, plot, annotate, spines and ticks, legend, export to eps/pdf/png/svg, PowerPoint-sized png), with fonts set once at the top of the file. Use whenever writing or editing plotting code in a notebook or function, making figures for a paper, poster or slides, or saving a figure to disk.
-license: MIT
-metadata:
-  author: brendanreardon
-  version: "1.0"
+description: House style and step order for matplotlib/pandas figures — Arial 6–7 pt, sizes in millimetres, no spines or tick marks, and export to eps, pdf, png, svg plus a PowerPoint-sized png. Use whenever writing or editing Python code that makes a plot, chart, graph or histogram, calls savefig, or produces a figure for a paper, poster or slides, even if the user doesn't mention style or export.
 ---
 
 # Figure structure
@@ -48,7 +44,7 @@ Work through these in order. Each is a comment-headed block.
   ```
 - [ ] 2. **Title and axis labels** as variables. Titles are full sentences with the sample size as `$N$={n}`; follow the project's spelling convention.
   ```python
-  title = f"Reimbursement schemes for {total} treatment indications"
+  title = f"Most treatment indications are reimbursed through the HSE scheme ($N$={total})"
   xlabel = "Reimbursement funding scheme"
   ylabel = "Indication count"
   ```
@@ -129,7 +125,7 @@ Fonts stay in the file's setup block, not in the function. Palette stays a modul
 After saving, confirm before reporting the figure done:
 
 1. The folder holds six files: `.eps`, `.pdf`, `.png`, `.transparent.png`, `.svg`, `.ppt.png`.
-2. The `.ppt.png` DPI times its pixel width reproduces the target width (`scripts/figure_helpers.py --self-test` checks this).
+2. The `.ppt.png` pixel width divided by its DPI equals the target width in inches (`figure_width / 25.4`). `scripts/figure_helpers.py --self-test` checks this on a demo figure.
 3. Look at the PNG: no clipped labels, value labels not overlapping, legend not covering data. Fix and re-save if any are wrong.
 
 ## Layouts and chart types

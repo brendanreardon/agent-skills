@@ -22,6 +22,10 @@ alphabetical order before presenting the final code.
   the sort automatically. Don't write separate grouping logic to enforce it,
   and don't assume `__init__` lands first among dunders (e.g. `__eq__` sorts
   before `__init__`).
+- Methods that share a name (a `@property` and its `@x.setter` /
+  `@x.deleter`, or `@typing.overload` stubs and their implementation) keep
+  their original relative order. Treat the sort as stable: getter, then
+  setter, then deleter; overload stubs before the implementation.
 
 ## What moves together as a unit
 
@@ -35,6 +39,9 @@ order, still directly attached:
 
 - Class-level attributes/constants defined before the methods — leave these
   where they are, at the top of the class body.
+- Class-body statements that refer to methods, such as aliases
+  (`__radd__ = __add__`) and `area = property(_get_area)`. Leave them after all the methods, in their
+  original order, so every name they use is already defined.
 - Methods in different classes — sort each class independently; never
   interleave methods across classes.
 - Nested classes — apply this same sort recursively to their bodies too, but
@@ -53,9 +60,6 @@ need to ask permission. But before reordering, scan for these specific
 patterns where order *can* matter, and if found, stop and flag it to the
 user (name the methods involved and why) instead of silently reordering:
 
-- `@property` / `@x.setter` / `@x.deleter` pairs — these already sort
-  adjacently since they share a base name, but confirm the setter/deleter
-  still immediately follows its property after sorting.
 - `@functools.singledispatchmethod` and its `@x.register` overloads — these
   rely on registration order at class-definition time.
 - `__init_subclass__`, metaclass hooks, or any class-body code that runs at

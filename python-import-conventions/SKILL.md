@@ -5,20 +5,30 @@ description: Import root modules/packages (e.g. `import pathlib`) and reference 
 
 # Import Root Modules, Not Names
 
-Import the root module or package with a plain `import`, then reference every
-member through its full dotted path at the point of use. Avoid pulling
-specific names out with `from module import name`.
+Import the module with a plain `import`, then reference every member through its full dotted path at the point of use. Avoid pulling specific names out with `from module import name`.
 
 ## Rule
 
-- Write `import module` (e.g. `import pathlib`, `import os`, `import json`),
-  never `from module import name` (e.g. `from pathlib import Path`).
+- Write `import module` (e.g. `import pathlib`, `import os`, `import json`), never `from module import name` (e.g. `from pathlib import Path`).
 - Reference the member through the full dotted path every time it's used:
   `pathlib.Path(...)`, `os.path.join(...)`, `json.JSONDecodeError`.
-- This applies regardless of nesting depth — `import collections` then
+- For a member that lives in a submodule, import the submodule by its full dotted name, then use the full path: `import collections.abc` then
   `collections.abc.Mapping`, not `from collections.abc import Mapping`.
-- This applies the same way to standard library, third-party, and local
-  project modules.
+- This applies the same way to standard library, third-party, and local project modules.
+
+## Gotcha: importing a package does not import its submodules
+
+`import package` only binds what the package's `__init__.py` loads itself. Reaching a submodule through it fails unless something else happened to import that submodule first:
+
+```python
+import xml
+xml.etree.ElementTree       # AttributeError: module 'xml' has no attribute 'etree'
+
+import xml.etree.ElementTree
+xml.etree.ElementTree.parse(...)   # works
+```
+
+`import collections` followed by `collections.abc` may appear to work only because the interpreter loaded `collections.abc` at startup. Don't rely on that; always import the submodule you use. `os.path` is the one common exception (`os` imports it itself), so `import os` is enough for it.
 
 ## Aliased imports (allowed exception)
 
@@ -45,10 +55,8 @@ form. These are not violations of the rule:
 - Relative imports within a package (`from . import sibling_module`,
   `from .submodule import helper`) — package-relative imports have no
   equivalent root-module form; leave these as conventional relative imports.
-- `if typing.TYPE_CHECKING:` guarded blocks — prefer `import module` over
-  `from module import Name` where practical, but a name imported purely for
-  a string-quoted type annotation (never referenced as a runtime dotted
-  path) may reasonably use `from module import Name`.
+
+`if typing.TYPE_CHECKING:` blocks follow the same rule as everywhere else: `import module` and dotted references in annotations. Only use `from module import Name` there if the dotted form causes a circular-import error.
 
 ## Example
 
@@ -63,8 +71,8 @@ m: Mapping = {}
 
 After:
 ```python
+import collections.abc
 import pathlib
-import collections
 
 p = pathlib.Path("foo")
 m: collections.abc.Mapping = {}

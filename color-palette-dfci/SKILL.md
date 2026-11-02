@@ -54,13 +54,9 @@ order = ['blue', 'orange', 'light blue', 'dark blue', 'teal', 'purple', 'tan', '
 
 ## Gotchas
 
-- The brand guide's secondary swatches print wrong RGB values for the two blue tints: PMS 3015 (70%) lists `(0, 98, 155)`, which is the primary blue, and PMS 298 (70%) lists `(76, 145, 185)`, which is the 3015 tint's value. PMS 137 (70%) lists `(251, 190, 95)` against hex `#ffbe5f` (255, 190, 95). Use the hex values above; the correct RGB is computed from the hex (e.g. `#79caeb` is (121, 202, 235)).
+- Use the hex values above. The brand guide's RGB values for the secondary tints are wrong; if RGB is needed, convert from the hex.
 - `light blue` (`#41b6e6`) is a primary color; `light blue tint` (`#79caeb`) is its 70% secondary. Don't confuse the two.
 - `green` and `pink` here are muted tertiary accents, not the same hues as Tableau's `green` and `pink`.
-
-## When to use
-
-Dana-Farber slides, posters, and branded figures. For papers and general analysis figures, use `color-palette-tableau`.
 
 ## Source
 
